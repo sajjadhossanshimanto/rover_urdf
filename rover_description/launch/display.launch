@@ -1,0 +1,12 @@
+<launch>
+  <arg name="urdf_file" default="$(find-pkg-share rover_description)/urdf/urdf_wheel.urdf"/>
+
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher">
+    <param name="robot_description" 
+           value="$(cat arg urdf_file)"/>
+  </node>
+
+  <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" name="joint_state_publisher_gui" />
+
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" />
+</launch>
