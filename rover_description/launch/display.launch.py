@@ -4,11 +4,18 @@ from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 
+
 def generate_launch_description():
+    root_dir = FindPackageShare('rover_description')
     urdf_path = PathJoinSubstitution([
-        FindPackageShare('rover_description'),
+        root_dir,
         'urdf',
         'urdf_wheel.urdf'
+    ])
+    rviz_config = PathJoinSubstitution([
+        root_dir,
+        'rviz',
+        'urdf_config.rviz'
     ])
 
     robot_description = ParameterValue(
@@ -32,6 +39,7 @@ def generate_launch_description():
             package='rviz2',
             executable='rviz2',
             name='rviz2',
+            arguments=['-d', rviz_config],
             output='screen'
         )
     ])
