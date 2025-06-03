@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /Grid1
         - /RobotModel1
       Splitter Ratio: 0.5
     Tree Height: 555
@@ -43,7 +44,7 @@ Visualization Manager:
       Offset:
         X: 0
         Y: 0
-        Z: 0
+        Z: -0.5
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
@@ -192,10 +193,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4353979825973511
+      Pitch: -0.11460192501544952
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.3053975105285645
+      Yaw: 0.14540578424930573
     Saved: ~
 Window Geometry:
   Displays:
@@ -213,5 +214,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 28
-  Y: 28
+  X: -4
+  Y: -4
