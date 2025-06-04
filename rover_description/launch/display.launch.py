@@ -12,6 +12,7 @@ def generate_launch_description():
         'urdf',
         'urdf_wheel.urdf'
     ])
+    print(repr(root_dir))
     rviz_config = PathJoinSubstitution([
         root_dir,
         'rviz',
@@ -43,3 +44,6 @@ def generate_launch_description():
             output='screen'
         )
     ])
+
+if __name__=="__main__":
+    generate_launch_description()
