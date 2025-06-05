@@ -4,6 +4,12 @@ from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 
+def debug_path(root_dir_sub):
+    from launch import LaunchContext
+    context = LaunchContext()
+    root_dir = root_dir_sub.perform(context)
+    
+    return root_dir
 
 def generate_launch_description():
     root_dir = FindPackageShare('rover_description')
