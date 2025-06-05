@@ -24,7 +24,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/base_link.STL" />
+          filename="file://$(arg rover_path)/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -38,7 +38,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/base_link.STL" />
+          filename="file://$(arg rover_path)/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -64,7 +64,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_1.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_1.STL" />
       </geometry>
       <material
         name="">
@@ -78,7 +78,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_1.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_1.STL" />
       </geometry>
     </collision>
   </link>
@@ -122,7 +122,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_2.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_2.STL" />
       </geometry>
       <material
         name="">
@@ -136,7 +136,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_2.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_2.STL" />
       </geometry>
     </collision>
   </link>
@@ -180,7 +180,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_3.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_3.STL" />
       </geometry>
       <material
         name="">
@@ -194,7 +194,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_3.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_3.STL" />
       </geometry>
     </collision>
   </link>
@@ -238,7 +238,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_4.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_4.STL" />
       </geometry>
       <material
         name="">
@@ -252,7 +252,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="$(arg rover_path)/meshes/joint_4.STL" />
+          filename="file://$(arg rover_path)/meshes/joint_4.STL" />
       </geometry>
     </collision>
   </link>
