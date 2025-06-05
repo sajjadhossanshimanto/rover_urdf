@@ -29,8 +29,12 @@ def generate_launch_description():
     ])
 
     robot_description = ParameterValue(
-        Command([FindExecutable(name='cat'), ' ', urdf_path]),
-        value_type=str  # Tell ROS it's a string
+        Command([
+            FindExecutable(name='xacro'), ' ',
+            urdf_path,
+            ' rover_path:=', root_dir
+        ]),
+        value_type=str
     )
 
     # gazebo setup
@@ -42,6 +46,7 @@ def generate_launch_description():
         cmd=['ros2', 'run', 'ros_gz_sim', 'create', '-topic', 'robot_description'],
         output='screen'
     )
+    print("GAZEBO_MODEL_PATH is set to:", debug_path(root_dir))
 
     gz_sim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -52,7 +57,8 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'gz_args': 'empty.sdf -r'
+            # 'gz_args': 'empty.sdf -r'
+            'gz_args': 'empty.sdf'
         }.items()
     )
 
