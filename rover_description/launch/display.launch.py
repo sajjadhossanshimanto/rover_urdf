@@ -3,6 +3,9 @@ from launch_ros.actions import Node
 from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
+from launch.actions import SetEnvironmentVariable, ExecuteProcess, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
 
 def debug_path(root_dir_sub):
     from launch import LaunchContext
@@ -18,7 +21,7 @@ def generate_launch_description():
         'urdf',
         'urdf_wheel.urdf'
     ])
-    print(repr(root_dir))
+    # print(repr(root_dir))
     rviz_config = PathJoinSubstitution([
         root_dir,
         'rviz',
@@ -28,6 +31,29 @@ def generate_launch_description():
     robot_description = ParameterValue(
         Command([FindExecutable(name='cat'), ' ', urdf_path]),
         value_type=str  # Tell ROS it's a string
+    )
+
+    # gazebo setup
+    set_gazebo_model_path = SetEnvironmentVariable(
+        name='GAZEBO_MODEL_PATH',
+        value=root_dir
+    )
+    create_entity_cmd = ExecuteProcess(
+        cmd=['ros2', 'run', 'ros_gz_sim', 'create', '-topic', 'robot_description'],
+        output='screen'
+    )
+
+    gz_sim_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            PathJoinSubstitution([
+                FindPackageShare('ros_gz_sim'),
+                'launch',
+                'gz_sim.launch.py'
+            ])
+        ]),
+        launch_arguments={
+            'gz_args': 'empty.sdf -r'
+        }.items()
     )
 
     return LaunchDescription([
@@ -48,7 +74,12 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d', rviz_config],
             output='screen'
-        )
+        ),
+
+        # gazebo launch
+        set_gazebo_model_path,
+        gz_sim_launch,
+        create_entity_cmd,
     ])
 
 if __name__=="__main__":
