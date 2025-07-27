@@ -9,6 +9,16 @@
     <gazebo reference="joint_2">
         <mu1 value="0.1" />
         <mu2 value="0.1" />
+    </gazebo>
+
+    <gazebo reference="joint_3">
+        <mu1 value="0.1" />
+        <mu2 value="0.1" />
+    </gazebo>
+
+    <gazebo reference="joint_4">
+        <mu1 value="0.1" />
+        <mu2 value="0.1" />
     </gazebo> -->
 
     <gazebo>
@@ -16,12 +26,14 @@
         filename="gz-sim-diff-drive-system"
         name="gz::sim::systems::DiffDrive">
             <right_joint>wheel_3</right_joint>
+            <right_joint>wheel_2</right_joint>
+            <left_joint>wheel_1</left_joint>
             <left_joint>wheel_4</left_joint>
-            <!-- <wheel_separation>0.45</wheel_separation> -->
-            <!-- <wheel_radius>0.1</wheel_radius> -->
+            <wheel_separation>0.786</wheel_separation>
+            <wheel_radius>0.25</wheel_radius>
             <frame_id>odom</frame_id>
             <child_frame_id>base_link</child_frame_id>
-            
+
         </plugin>
     </gazebo>
 
@@ -29,6 +41,8 @@
         <plugin 
             filename="gz-sim-joint-state-publisher-system" 
             name="gz::sim::systems::JointStatePublisher">
+            <joint_name>wheel_1</joint_name>
+            <joint_name>wheel_2</joint_name>
             <joint_name>wheel_3</joint_name>
             <joint_name>wheel_4</joint_name>
         </plugin>

@@ -56,8 +56,8 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            # 'gz_args': 'empty.sdf -r'
-            'gz_args': 'empty.sdf'
+            'gz_args': 'empty.sdf -r' # -r for start the simlation
+            # 'gz_args': 'empty.sdf'
         }.items()
     )
 

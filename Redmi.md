@@ -13,7 +13,7 @@ gz topic -l
 ```
 - send command to a topic
 ```
-gz topic -t "/model/my_robot/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.05}"
+gz topic -t "/model/rover_robo/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.05}"
 ``` 
 
 
