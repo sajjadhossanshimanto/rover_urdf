@@ -24,7 +24,7 @@ def generate_launch_description():
     # print(repr(root_dir))
     rviz_config = PathJoinSubstitution([
         root_dir,
-        'rviz',
+        'config',
         'urdf_config.rviz'
     ])
 
