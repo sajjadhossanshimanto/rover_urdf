@@ -96,7 +96,7 @@
     <child
       link="joint_1" />
     <axis
-      xyz="-1 0 0" />
+      xyz="1 0 0" />
     <limit
       lower="0"
       upper="0"
@@ -270,7 +270,7 @@
     <child
       link="joint_4" />
     <axis
-      xyz="-1 0 0" />
+      xyz="1 0 0" />
     <limit
       lower="0"
       upper="0"
