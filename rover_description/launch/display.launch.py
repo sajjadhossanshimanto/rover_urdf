@@ -19,7 +19,7 @@ def generate_launch_description():
     urdf_path = PathJoinSubstitution([
         root_dir,
         'urdf',
-        'urdf_wheel.urdf'
+        'robot.xacro'
     ])
     # print(repr(root_dir))
     rviz_config = PathJoinSubstitution([
@@ -32,7 +32,7 @@ def generate_launch_description():
         Command([
             FindExecutable(name='xacro'), ' ',
             urdf_path,
-            ' rover_path:=', root_dir
+            ' rover_path:=', root_dir # passing var to urdf
         ]),
         value_type=str
     )
