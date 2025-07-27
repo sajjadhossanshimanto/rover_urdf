@@ -44,10 +44,10 @@ Visualization Manager:
       Offset:
         X: 0
         Y: 0
-        Z: -0.52
+        Z: -0.5199999809265137
       Plane: XY
       Plane Cell Count: 10
-      Reference Frame: <Fixed Frame>
+      Reference Frame: odom
       Value: true
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
@@ -115,21 +115,24 @@ Visualization Manager:
           Value: true
         joint_4:
           Value: true
+        odom:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          joint_1:
-            {}
-          joint_2:
-            {}
-          joint_3:
-            {}
-          joint_4:
-            {}
+        odom:
+          base_link:
+            joint_1:
+              {}
+            joint_2:
+              {}
+            joint_3:
+              {}
+            joint_4:
+              {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -178,7 +181,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.644041061401367
+      Distance: 5.8254852294921875
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -193,10 +196,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.11460192501544952
+      Pitch: 0.6903979778289795
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.14540578424930573
+      Yaw: 0.0854058787226677
     Saved: ~
 Window Geometry:
   Displays:
@@ -214,5 +217,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: -4
-  Y: -4
+  X: 82
+  Y: 27
