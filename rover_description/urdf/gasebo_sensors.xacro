@@ -20,6 +20,7 @@
             <!-- <wheel_separation>0.45</wheel_separation> -->
             <!-- <wheel_radius>0.1</wheel_radius> -->
             <frame_id>odom</frame_id>
+            <child_frame_id>base_link</child_frame_id>
             
         </plugin>
     </gazebo>
