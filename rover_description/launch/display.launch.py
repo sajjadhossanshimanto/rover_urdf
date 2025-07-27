@@ -16,16 +16,21 @@ def debug_path(root_dir_sub):
 
 def generate_launch_description():
     root_dir = FindPackageShare('rover_description')
+    config_dir = PathJoinSubstitution([root_dir, 'config'])
     urdf_path = PathJoinSubstitution([
         root_dir,
         'urdf',
         'robot.xacro'
     ])
     # print(repr(root_dir))
+
     rviz_config = PathJoinSubstitution([
-        root_dir,
-        'config',
+        config_dir,
         'urdf_config.rviz'
+    ])
+    bridge_config = PathJoinSubstitution([
+        config_dir,
+        'gazebo_bridge.yaml'
     ])
 
     robot_description = ParameterValue(
@@ -61,6 +66,15 @@ def generate_launch_description():
         }.items()
     )
 
+    ros_gz_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        parameters=[{
+            'config_file': bridge_config# config file path
+        }],
+        output='screen' # only for debug to confirm running
+    )
+
     return LaunchDescription([
         Node(
             package='robot_state_publisher',
@@ -84,6 +98,7 @@ def generate_launch_description():
         # gazebo launch
         gz_sim_launch,
         create_entity_cmd,
+        ros_gz_bridge
     ])
 
 if __name__=="__main__":

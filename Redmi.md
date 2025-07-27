@@ -16,6 +16,16 @@
 ```
 ros2 run ros_gz_bridge parameter_bridge --ros-args -p config_file:=src/rover_description/config/gazebo_bridge.yaml
 ```
+## ros controll
+- send controll command from ros. to check if bridge is working 
+```
+ros2 topic pub -r 1 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}, angular: {z: 0.1}}"
+```
+- teleop controller
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+- there is also package available for joystick `teleop_twist_joy`
 
 ## Gazebo plugin
 - system repo -> https://github.com/gazebosim/gz-sim/tree/gz-sim8/src/systems
