@@ -32,6 +32,9 @@ def generate_launch_description():
         config_dir,
         'gazebo_bridge.yaml'
     ])
+    world_map =  PathJoinSubstitution([
+        root_dir, 'worlds', 'empty.sdf'
+    ])
 
     robot_description = ParameterValue(
         Command([
@@ -61,8 +64,9 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'gz_args': 'empty.sdf -r' # -r for start the simlation
+            # 'gz_args': 'empty.sdf -r' # -r for start the simlation
             # 'gz_args': 'empty.sdf'
+            'gz_args': world_map,
         }.items()
     )
 
