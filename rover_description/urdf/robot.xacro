@@ -3,5 +3,6 @@
 
     <xacro:include filename="urdf_wheel.urdf" />
     <xacro:include filename="gasebo_sensors.xacro" />
+    <xacro:include filename="imu_sensor.xacro" />
 
 </robot>

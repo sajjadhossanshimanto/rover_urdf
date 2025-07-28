@@ -42,6 +42,18 @@ gz topic -l
 gz topic -t "/model/rover_robo/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.05}"
 ``` 
 
+## gazebo sensors
+- sensors [library](https://github.com/gazebosim/gz-sensors)
+- stf format [tree](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_navsat)
+- predefined world [sdf](https://github.com/gazebosim/gz-sim/tree/gz-sim8/examples/worlds)
+- add in the world
+```
+    <plugin
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+```
 
 ## TODO
 - add `base_footprint` link
