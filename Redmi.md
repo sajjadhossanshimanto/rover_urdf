@@ -2,7 +2,6 @@
 
 - gazebo harmonic [docs](https://gazebosim.org/docs/harmonic/install_ubuntu/)
 ## Errors
-- gps transfer not working
 - gps data is fluctuating in our empty world but not in `spherical_coordinates.sdf`
 
 ## ros_gz bridge

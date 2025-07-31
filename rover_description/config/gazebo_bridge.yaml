@@ -31,5 +31,5 @@
 - gz_topic_name: "/navsat"
   gz_type_name: "gz.msgs.NavSat"
   ros_topic_name: "/gps"
-  ros_type_name: "gps_msgs/msg/GPSFix"
+  ros_type_name: "sensor_msgs/msg/NavSatFix"
   direction: GZ_TO_ROS
