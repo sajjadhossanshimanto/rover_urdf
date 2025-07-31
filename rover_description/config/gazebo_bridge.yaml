@@ -1,4 +1,4 @@
-- gz_topic_name: "/clock"
+- gz_topic_name: "/world/empty/clock"
   ros_topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
@@ -26,4 +26,10 @@
   gz_type_name: "gz.msgs.IMU"
   ros_topic_name: "/imu"
   ros_type_name: "sensor_msgs/msg/Imu"
+  direction: GZ_TO_ROS
+
+- gz_topic_name: "/navsat"
+  gz_type_name: "gz.msgs.NavSat"
+  ros_topic_name: "/gps"
+  ros_type_name: "gps_msgs/msg/GPSFix"
   direction: GZ_TO_ROS

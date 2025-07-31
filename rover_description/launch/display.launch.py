@@ -67,6 +67,7 @@ def generate_launch_description():
             # 'gz_args': 'empty.sdf -r' # -r for start the simlation
             # 'gz_args': 'empty.sdf'
             'gz_args': world_map,
+            # 'gz_args': 'spherical_coordinates.sdf'
         }.items()
     )
 
