@@ -28,7 +28,7 @@
   ros_type_name: "sensor_msgs/msg/Imu"
   direction: GZ_TO_ROS
 
-- gz_topic_name: "/navsat"
+- gz_topic_name: "/gps"
   gz_type_name: "gz.msgs.NavSat"
   ros_topic_name: "/gps"
   ros_type_name: "sensor_msgs/msg/NavSatFix"
