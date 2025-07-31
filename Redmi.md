@@ -55,6 +55,11 @@ gz topic -t "/model/rover_robo/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, a
       <render_engine>ogre2</render_engine>
     </plugin>
 ```
+### Gps
+- how code works at [sensor.cc](https://github.com/gazebosim/gz-sensors/blob/gz-sensors8/src/NavSatSensor.cc#L82)
+- all attributes [header.hh](https://gazebosim.org/api/sensors/8/classgz_1_1sensors_1_1NavSatSensor.html)
+- example world [spherical_coordinates](https://github.com/gazebosim/gz-sim/blob/ign-gazebo6/examples/worlds/spherical_coordinates.sdf)
+- sdf [tree](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_gps)
 
 ## TODO
 - add `base_footprint` link
