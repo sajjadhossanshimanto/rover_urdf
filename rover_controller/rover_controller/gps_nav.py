@@ -194,7 +194,18 @@ class GpsNavigator(Node):
             if abs(angle_diff_correction) > self.angle_tolerance:
                  twist_msg.angular.z = 0.1 * angle_diff_correction # Small correction
 
-            self.velocity_publisher.publish(twist_msg)
+
+    def rotate_robo(self, direction=-1):
+        twist_msg = Twist()
+        twist_msg.angular.z = direction*self.angular_speed
+
+        self.velocity_publisher.publish(twist_msg)
+
+    def move_forward(self):
+        twist_msg = Twist()
+        twist_msg.linear.x = self.linear_speed
+    
+        self.velocity_publisher.publish(twist_msg)
 
     def stop_robot(self):
         """Publishes a zero-velocity Twist message to stop the robot."""
@@ -215,6 +226,8 @@ class GpsNavigator(Node):
 def main(args=None):
     rclpy.init(args=args)
     gps_navigator = GpsNavigator()
+    # gps_navigator.target_lat = -22.986777
+    # gps_navigator.target_lon = -43.202501
     try:
         rclpy.spin(gps_navigator)
     except KeyboardInterrupt:
@@ -228,7 +241,7 @@ if __name__ == '__main__':
     main()
 
 '''
-origin: (-22.986687, -43.202501)
+origin: (-22.986687, -43.202501) -> heading north
 # north
 ros2 run rover_controller gps_nav  --ros-args -p target_latitude:=-22.986597 -p target_longitude:=-43.202501
 # south
