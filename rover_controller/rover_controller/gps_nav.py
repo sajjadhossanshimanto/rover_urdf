@@ -27,10 +27,10 @@ def euler_from_quaternion(quaternion):
     t4 = +1.0 - 2.0 * (y * y + z * z)
     yaw = math.atan2(t3, t4)
 
-    # convert from radians to degrees
-    roll_deg = math.degrees(roll)
-    pitch_deg = math.degrees(pitch)
-    yaw_deg = math.degrees(yaw)
+    # # convert from radians to degrees
+    # roll_deg = math.degrees(roll)
+    # pitch_deg = math.degrees(pitch)
+    # yaw_deg = math.degrees(yaw)
 
     return roll_deg, pitch_deg, yaw_deg
 
@@ -177,7 +177,7 @@ class GpsNavigator(Node):
             angle_diff = self.normalize_angle(bearing_to_target - self.current_yaw)
             
             if abs(angle_diff) > self.angle_tolerance:
-                self.get_logger().info("rotating towards target ")
+                self.get_logger().info(f"rotating towards target: {self.current_yaw} -> {bearing_to_target}")
             else:
                 # at this point status is rotation completed
                 self.stop_robot()
@@ -194,6 +194,8 @@ class GpsNavigator(Node):
                 self.stop_robot()
                 self.get_logger().info(f"Goal reached! Distance to target: {distance_to_target:.2f}m")
                 self.last_state = State.goal_reached
+            else:
+                self.get_logger().info(f"Moving towards ({self.current_lat}, {self.current_lon}) -> ({self.target_lat}, {self.target_lon})")
             return
 
         #     # TODO Optional: A simple proportional controller to correct heading while moving
