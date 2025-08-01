@@ -76,6 +76,14 @@ def calculate_distance(current_lat, current_lon, target_lat, target_lon):
     distance = R * c * 1000 # convert to meters
     return distance
 
+class State:
+    ideal = "IDEAL"
+    target_received = "GOAL_SET"
+    rotating = "ROTATING"
+    rotaion_completed = "ROTATION_COMPLETED"
+    running = "MOVING_FORWARD"
+    goal_reached = "GOAL_REACHED"
+
 
 class GpsNavigator(Node):
     """
@@ -103,7 +111,7 @@ class GpsNavigator(Node):
         self.current_lat = None
         self.current_lon = None
         self.current_yaw = None
-        self.state = 'IDLE' # Can be IDLE, ROTATING, MOVING_FORWARD, GOAL_REACHED
+        self.last_state = State.ideal # Can be IDLE, ROTATING, MOVING_FORWARD, GOAL_REACHED
 
         # --- Subscribers ---
         self.gps_subscriber = self.create_subscription(
@@ -144,55 +152,54 @@ class GpsNavigator(Node):
         """Main control loop for state-based navigation."""
         # Wait until we have initial sensor readings
         if self.current_lat is None or self.current_yaw is None:
+            self.get_logger().info("waiting for sensor data.")
             return
 
         # Start navigation if we are idle and have a valid target
-        if self.state == 'IDLE':
+        if self.last_state == State.ideal:
             if self.target_lat != 0.0 and self.target_lon != 0.0:
                 self.get_logger().info("Valid target and sensor data. Starting navigation.")
-                self.state = 'ROTATING'
+                self.last_state = State.target_received
             else:
                 self.get_logger().warn("Target coordinates are not set. Remaining in IDLE state.")
-                return
+            return
 
-        # Calculate distance and bearing to target
-        distance_to_target = calculate_distance(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
-        bearing_to_target = calculate_bearing(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
-        self.get_logger().info(f'rotational angel {bearing_to_target}')
+        if self.last_state == State.target_received:
+            bearing_to_target = calculate_bearing(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
+            angle_diff = self.normalize_angle(bearing_to_target - self.current_yaw)
+            
+            if abs(angle_diff) > self.angle_tolerance:
+                self.rotate_robo(1 if angle_diff > 0 else -1)
+            self.last_state = State.rotating
+            
+        if self.last_state == State.rotating:
+            bearing_to_target = calculate_bearing(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
+            angle_diff = self.normalize_angle(bearing_to_target - self.current_yaw)
+            
+            if abs(angle_diff) > self.angle_tolerance:
+                self.get_logger().info("rotating towards target ")
+            else:
+                # at this point status is rotation completed
+                self.stop_robot()
+                self.get_logger().info("Rotation complete. Switching to MOVING_FORWARD.")
+                self.move_forward()
+                self.last_state = State.running
+            return 
+
 
         # Check if we have reached the goal
-        if distance_to_target <= self.distance_tolerance:
-            if self.state != 'GOAL_REACHED':
+        if self.last_state == State.running:
+            distance_to_target = calculate_distance(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
+            if distance_to_target <= self.distance_tolerance:
+                self.stop_robot()
                 self.get_logger().info(f"Goal reached! Distance to target: {distance_to_target:.2f}m")
-                self.stop_robot()
-                self.state = 'GOAL_REACHED'
-            return # Exit loop once goal is reached
+                self.last_state = State.goal_reached
+            return
 
-        # --- State Machine Logic ---
-        twist_msg = Twist()
-
-        if self.state == 'ROTATING':
-            # Calculate the difference between current heading and desired bearing
-            angle_diff = self.normalize_angle(bearing_to_target - self.current_yaw)
-
-            if abs(angle_diff) > self.angle_tolerance:
-                # Rotate towards the target
-                twist_msg.angular.z = self.angular_speed if angle_diff > 0 else -self.angular_speed
-                self.velocity_publisher.publish(twist_msg)
-            else:
-                # Angle is within tolerance, stop rotating and start moving
-                self.get_logger().info("Rotation complete. Switching to MOVING_FORWARD.")
-                self.stop_robot()
-                self.state = 'MOVING_FORWARD'
-
-        elif self.state == 'MOVING_FORWARD':
-            # Move straight towards the target
-            twist_msg.linear.x = self.linear_speed
-            
-            # Optional: A simple proportional controller to correct heading while moving
-            angle_diff_correction = self.normalize_angle(bearing_to_target - self.current_yaw)
-            if abs(angle_diff_correction) > self.angle_tolerance:
-                 twist_msg.angular.z = 0.1 * angle_diff_correction # Small correction
+        #     # TODO Optional: A simple proportional controller to correct heading while moving
+        #     angle_diff_correction = self.normalize_angle(bearing_to_target - self.current_yaw)
+        #     if abs(angle_diff_correction) > self.angle_tolerance:
+        #          twist_msg.angular.z = 0.1 * angle_diff_correction # Small correction
 
 
     def rotate_robo(self, direction=-1):
