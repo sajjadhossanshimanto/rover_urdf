@@ -32,7 +32,7 @@ def euler_from_quaternion(quaternion):
     # pitch_deg = math.degrees(pitch)
     # yaw_deg = math.degrees(yaw)
 
-    return roll_deg, pitch_deg, yaw_deg
+    return round(roll, 6), round(pitch, 6), round(yaw, 6)
 
 def calculate_bearing(current_lat, current_lon, target_lat, target_lon):
     """
@@ -139,8 +139,8 @@ class GpsNavigator(Node):
         """Callback for the GPS sensor."""
         if self.current_lat is None:
             self.get_logger().info("First GPS message received.")
-        self.current_lat = msg.latitude
-        self.current_lon = msg.longitude
+        self.current_lat = round(msg.latitude, 6)# 6 digit = 11cm precition
+        self.current_lon = round(msg.longitude, 6)
 
     def imu_callback(self, msg):
         """Callback for the IMU sensor."""
