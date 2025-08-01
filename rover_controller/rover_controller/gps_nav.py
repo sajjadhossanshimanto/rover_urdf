@@ -1,0 +1,226 @@
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import NavSatFix, Imu
+from geometry_msgs.msg import Twist
+import math
+
+
+def get_yaw_from_quaternion(quaternion):
+    """
+    Convert a quaternion (from geometry_msgs.msg.Quaternion) to a yaw angle in radians.
+    """
+    x = quaternion.x
+    y = quaternion.y
+    z = quaternion.z
+    w = quaternion.w
+
+    siny_cosp = 2 * (w * z + x * y)
+    cosy_cosp = 1 - 2 * (y * y + z * z)
+    yaw = math.atan2(siny_cosp, cosy_cosp)
+    return yaw
+
+def calculate_bearing(current_lat, current_lon, target_lat, target_lon):
+    """
+    Calculate the bearing (initial heading) from a current GPS coordinate to a target GPS coordinate.
+    Result is in radians.
+    """
+    current_lat = math.radians(current_lat)
+    current_lon = math.radians(current_lon)
+    target_lat = math.radians(target_lat)
+    target_lon = math.radians(target_lon)
+
+    dLon = target_lon - current_lon
+
+    y = math.sin(dLon) * math.cos(target_lat)
+    x = math.cos(current_lat) * math.sin(target_lat) - \
+        math.sin(current_lat) * math.cos(target_lat) * math.cos(dLon)
+
+    bearing = math.atan2(y, x)
+    return bearing
+
+def calculate_distance(current_lat, current_lon, target_lat, target_lon):
+    """
+    Calculate the great-circle distance between two points
+    on the earth (specified in decimal degrees).
+    Result is in meters.
+    """
+    # Radius of earth in kilometers
+    R = 6371.0
+
+    lat1 = math.radians(current_lat)
+    lon1 = math.radians(current_lon)
+    lat2 = math.radians(target_lat)
+    lon2 = math.radians(target_lon)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    distance = R * c * 1000 # convert to meters
+    return distance
+
+
+class GpsNavigator(Node):
+    """
+    A ROS2 node for navigating a robot to a target GPS coordinate.
+    """
+    def __init__(self):
+        super().__init__('gps_navigator')
+
+        # --- Parameters ---
+        self.declare_parameter('target_latitude', 0.0)
+        self.declare_parameter('target_longitude', 0.0)
+        self.declare_parameter('linear_speed', 0.5) # m/s
+        self.declare_parameter('angular_speed', 0.3) # rad/s
+        self.declare_parameter('distance_tolerance', 1.0) # meters
+        self.declare_parameter('angle_tolerance', 0.05) # radians
+
+        self.target_lat = self.get_parameter('target_latitude').get_parameter_value().double_value
+        self.target_lon = self.get_parameter('target_longitude').get_parameter_value().double_value
+        self.linear_speed = self.get_parameter('linear_speed').get_parameter_value().double_value
+        self.angular_speed = self.get_parameter('angular_speed').get_parameter_value().double_value
+        self.distance_tolerance = self.get_parameter('distance_tolerance').get_parameter_value().double_value
+        self.angle_tolerance = self.get_parameter('angle_tolerance').get_parameter_value().double_value
+
+        # --- State Variables ---
+        self.current_lat = None
+        self.current_lon = None
+        self.current_yaw = None
+        self.state = 'IDLE' # Can be IDLE, ROTATING, MOVING_FORWARD, GOAL_REACHED
+
+        # --- Subscribers ---
+        self.gps_subscriber = self.create_subscription(
+            NavSatFix,
+            '/gps', # Make sure this topic is correct
+            self.gps_callback,
+            10)
+        self.imu_subscriber = self.create_subscription(
+            Imu,
+            '/imu', # Make sure this topic is correct
+            self.imu_callback,
+            10)
+
+        # --- Publisher ---
+        self.velocity_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+
+        # --- Control Loop Timer ---
+        self.control_timer = self.create_timer(0.1, self.control_loop)
+
+        self.get_logger().info(f"GPS Navigator Node Started. Target: LAT={self.target_lat}, LON={self.target_lon}")
+        self.get_logger().info("Waiting for first GPS and IMU messages...")
+
+
+    def gps_callback(self, msg):
+        """Callback for the GPS sensor."""
+        if self.current_lat is None:
+            self.get_logger().info("First GPS message received.")
+        self.current_lat = msg.latitude
+        self.current_lon = msg.longitude
+
+    def imu_callback(self, msg):
+        """Callback for the IMU sensor."""
+        if self.current_yaw is None:
+            self.get_logger().info("First IMU message received.")
+        self.current_yaw = get_yaw_from_quaternion(msg.orientation)
+
+    def control_loop(self):
+        """Main control loop for state-based navigation."""
+        # Wait until we have initial sensor readings
+        if self.current_lat is None or self.current_yaw is None:
+            return
+
+        # Start navigation if we are idle and have a valid target
+        if self.state == 'IDLE':
+            if self.target_lat != 0.0 and self.target_lon != 0.0:
+                self.get_logger().info("Valid target and sensor data. Starting navigation.")
+                self.state = 'ROTATING'
+            else:
+                self.get_logger().warn("Target coordinates are not set. Remaining in IDLE state.")
+                return
+
+        # Calculate distance and bearing to target
+        distance_to_target = calculate_distance(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
+        bearing_to_target = calculate_bearing(self.current_lat, self.current_lon, self.target_lat, self.target_lon)
+        self.get_logger().info(f'rotational angel {bearing_to_target}')
+
+        # Check if we have reached the goal
+        if distance_to_target <= self.distance_tolerance:
+            if self.state != 'GOAL_REACHED':
+                self.get_logger().info(f"Goal reached! Distance to target: {distance_to_target:.2f}m")
+                self.stop_robot()
+                self.state = 'GOAL_REACHED'
+            return # Exit loop once goal is reached
+
+        # --- State Machine Logic ---
+        twist_msg = Twist()
+
+        if self.state == 'ROTATING':
+            # Calculate the difference between current heading and desired bearing
+            angle_diff = self.normalize_angle(bearing_to_target - self.current_yaw)
+
+            if abs(angle_diff) > self.angle_tolerance:
+                # Rotate towards the target
+                twist_msg.angular.z = self.angular_speed if angle_diff > 0 else -self.angular_speed
+                self.velocity_publisher.publish(twist_msg)
+            else:
+                # Angle is within tolerance, stop rotating and start moving
+                self.get_logger().info("Rotation complete. Switching to MOVING_FORWARD.")
+                self.stop_robot()
+                self.state = 'MOVING_FORWARD'
+
+        elif self.state == 'MOVING_FORWARD':
+            # Move straight towards the target
+            twist_msg.linear.x = self.linear_speed
+            
+            # Optional: A simple proportional controller to correct heading while moving
+            angle_diff_correction = self.normalize_angle(bearing_to_target - self.current_yaw)
+            if abs(angle_diff_correction) > self.angle_tolerance:
+                 twist_msg.angular.z = 0.1 * angle_diff_correction # Small correction
+
+            self.velocity_publisher.publish(twist_msg)
+
+    def stop_robot(self):
+        """Publishes a zero-velocity Twist message to stop the robot."""
+        twist_msg = Twist()
+        twist_msg.linear.x = 0.0
+        twist_msg.angular.z = 0.0
+        self.velocity_publisher.publish(twist_msg)
+        self.get_logger().info("Robot stopped.")
+
+    def normalize_angle(self, angle):
+        """Normalize an angle to the range [-pi, pi]."""
+        while angle > math.pi:
+            angle -= 2.0 * math.pi
+        while angle < -math.pi:
+            angle += 2.0 * math.pi
+        return angle
+
+def main(args=None):
+    rclpy.init(args=args)
+    gps_navigator = GpsNavigator()
+    try:
+        rclpy.spin(gps_navigator)
+    except KeyboardInterrupt:
+        gps_navigator.get_logger().info("Navigation interrupted by user.")
+    finally:
+        gps_navigator.stop_robot()
+        gps_navigator.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+'''
+origin: (-22.986687, -43.202501)
+# north
+ros2 run rover_controller gps_nav  --ros-args -p target_latitude:=-22.986597 -p target_longitude:=-43.202501
+# south
+ros2 run rover_controller gps_nav  --ros-args -p target_latitude:=-22.986777 -p target_longitude:=-43.202501
+# east
+ros2 run rover_controller gps_nav  --ros-args -p target_latitude:=-22.986687 -p target_longitude:=-43.202403
+# west
+ros2 run rover_controller gps_nav  --ros-args -p target_latitude:=-22.986687 -p target_longitude:=-43.202599
+
+'''

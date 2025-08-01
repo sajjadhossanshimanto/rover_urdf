@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'gps_nav = rover_controller.gps_nav:main',
         ],
     },
 )
