@@ -5,19 +5,34 @@ from geometry_msgs.msg import Twist
 import math
 
 
-def get_yaw_from_quaternion(quaternion):
-    """
-    Convert a quaternion (from geometry_msgs.msg.Quaternion) to a yaw angle in radians.
-    """
+def euler_from_quaternion(quaternion):
     x = quaternion.x
     y = quaternion.y
     z = quaternion.z
     w = quaternion.w
 
-    siny_cosp = 2 * (w * z + x * y)
-    cosy_cosp = 1 - 2 * (y * y + z * z)
-    yaw = math.atan2(siny_cosp, cosy_cosp)
-    return yaw
+    # roll (x-axis rotation)
+    t0 = +2.0 * (w * x + y * z)
+    t1 = +1.0 - 2.0 * (x * x + y * y)
+    roll = math.atan2(t0, t1)
+
+    # pitch (y-axis rotation)
+    t2 = +2.0 * (w * y - z * x)
+    t2 = +1.0 if t2 > +1.0 else t2
+    t2 = -1.0 if t2 < -1.0 else t2
+    pitch = math.asin(t2)
+
+    # yaw (z-axis rotation)
+    t3 = +2.0 * (w * z + x * y)
+    t4 = +1.0 - 2.0 * (y * y + z * z)
+    yaw = math.atan2(t3, t4)
+
+    # convert from radians to degrees
+    roll_deg = math.degrees(roll)
+    pitch_deg = math.degrees(pitch)
+    yaw_deg = math.degrees(yaw)
+
+    return roll_deg, pitch_deg, yaw_deg
 
 def calculate_bearing(current_lat, current_lon, target_lat, target_lon):
     """
@@ -123,7 +138,7 @@ class GpsNavigator(Node):
         """Callback for the IMU sensor."""
         if self.current_yaw is None:
             self.get_logger().info("First IMU message received.")
-        self.current_yaw = get_yaw_from_quaternion(msg.orientation)
+        self.current_yaw = euler_from_quaternion(msg.orientation)[-1]
 
     def control_loop(self):
         """Main control loop for state-based navigation."""
