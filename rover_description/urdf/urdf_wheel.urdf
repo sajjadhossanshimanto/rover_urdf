@@ -25,7 +25,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 0 3.141592" />
       <geometry>
         <mesh
           filename="file://$(arg rover_path)/meshes/base_link.STL" />
@@ -65,7 +65,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.141592 0 0" />
       <geometry>
         <mesh
           filename="file://$(arg rover_path)/meshes/joint_1.STL" />
@@ -90,7 +90,7 @@
     name="wheel_1"
     type="continuous">
     <origin
-      xyz="-0.39068 -0.41211 -0.38728"
+      xyz="0.349292562707965 0.374648069983417 -0.387276310870224"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -123,7 +123,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.141592 0 0" />
       <geometry>
         <mesh
           filename="file://$(arg rover_path)/meshes/joint_2.STL" />
@@ -148,7 +148,7 @@
     name="wheel_2"
     type="continuous">
     <origin
-      xyz="-0.390678841233882 0.374505301267686 -0.387276310870224"
+      xyz="0.349292562707965 -0.412250550889761 -0.387276310870224"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -181,7 +181,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.141592 0 0" />
       <geometry>
         <mesh
           filename="file://$(arg rover_path)/meshes/joint_3.STL" />
@@ -206,7 +206,7 @@
     name="wheel_3"
     type="continuous">
     <origin
-      xyz="0.349292562707965 0.374648069983417 -0.387276310870224"
+      xyz="-0.39068 -0.41211 -0.38728"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -239,7 +239,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.141592 0 0" />
       <geometry>
         <mesh
           filename="file://$(arg rover_path)/meshes/joint_4.STL" />
@@ -264,7 +264,7 @@
     name="wheel_4"
     type="continuous">
     <origin
-      xyz="0.349292562707965 -0.412250550889761 -0.387276310870224"
+      xyz="-0.390678841233882 0.374505301267686 -0.387276310870224"
       rpy="0 0 0" />
     <parent
       link="base_link" />
