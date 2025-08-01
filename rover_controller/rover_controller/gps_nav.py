@@ -92,12 +92,12 @@ class GpsNavigator(Node):
         self.declare_parameter('distance_tolerance', 1.0) # meters
         self.declare_parameter('angle_tolerance', 0.05) # radians
 
-        self.target_lat = self.get_parameter('target_latitude').get_parameter_value().double_value
-        self.target_lon = self.get_parameter('target_longitude').get_parameter_value().double_value
-        self.linear_speed = self.get_parameter('linear_speed').get_parameter_value().double_value
-        self.angular_speed = self.get_parameter('angular_speed').get_parameter_value().double_value
-        self.distance_tolerance = self.get_parameter('distance_tolerance').get_parameter_value().double_value
-        self.angle_tolerance = self.get_parameter('angle_tolerance').get_parameter_value().double_value
+        self.target_lat = self.get_parameter('target_latitude').value
+        self.target_lon = self.get_parameter('target_longitude').value
+        self.linear_speed = self.get_parameter('linear_speed').value
+        self.angular_speed = self.get_parameter('angular_speed').value
+        self.distance_tolerance = self.get_parameter('distance_tolerance').value
+        self.angle_tolerance = self.get_parameter('angle_tolerance').value
 
         # --- State Variables ---
         self.current_lat = None
