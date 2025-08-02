@@ -109,12 +109,19 @@ class GpsNavigator(Node):
             twist_msg.angular.z = angular_velocity
         else:
             self.get_logger().info("Goal Reached!")
-            twist_msg.linear.x = 0.0
-            twist_msg.angular.z = 0.0
-            # Optional: shutdown node once goal is reached
+            self.stop_robot()
+            # shutdown node once goal is reached
             rclpy.shutdown()
         
         self.cmd_vel_pub.publish(twist_msg)
+
+    def stop_robot(self):
+        """Publishes a zero-velocity Twist message to stop the robot."""
+        twist_msg = Twist()
+        twist_msg.linear.x = 0.0
+        twist_msg.angular.z = 0.0
+        self.cmd_vel_pub.publish(twist_msg)
+        self.get_logger().info("Robot stopped.")
 
 def main(args=None):
     rclpy.init(args=args)
