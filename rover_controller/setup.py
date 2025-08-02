@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'gps_nav = rover_controller.gps_nav:main',
+            'gps_nav2 = rover_controller.gps_nav2:main',
         ],
     },
 )
