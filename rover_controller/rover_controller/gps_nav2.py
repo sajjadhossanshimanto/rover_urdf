@@ -77,7 +77,7 @@ class GpsNavigator(Node):
         self.current_yaw = euler_from_quaternion(msg.orientation)[-1]
 
     def convert_gps_to_xy(self, lat, lon):
-        R = 6378137.0  # Earth radius in meters
+        R = 378137.0  # Earth radius in meters
         x = R * (lon - self.origin_lon) * math.cos(math.radians(self.origin_lat))
         y = R * (lat - self.origin_lat)
         return round(x, 6), round(y, 6)
