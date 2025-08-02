@@ -105,7 +105,7 @@ class GpsNavigator(Node):
             if abs(angle_error) < math.pi / 4: # 45 degrees
                 linear_velocity = self.k_p_linear * distance_to_goal
 
-            twist_msg.linear.x = min(0.5, linear_velocity) # Cap max speed
+            twist_msg.linear.x = -min(0.5, linear_velocity) # Cap max speed
             twist_msg.angular.z = angular_velocity
         else:
             self.get_logger().info("Goal Reached!")
@@ -132,3 +132,14 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+'''
+# north
+ros2 run rover_controller gps_nav2  --ros-args -p target_lat:=-22.986597 -p target_lon:=-43.202501
+# south
+ros2 run rover_controller gps_nav2  --ros-args -p target_lat:=-22.986777 -p target_lon:=-43.202501
+# east
+ros2 run rover_controller gps_nav2  --ros-args -p target_lat:=-22.986687 -p target_lon:=-43.202403
+# west
+ros2 run rover_controller gps_nav2  --ros-args -p target_lat:=-22.986687 -p target_lon:=-43.202599
+'''

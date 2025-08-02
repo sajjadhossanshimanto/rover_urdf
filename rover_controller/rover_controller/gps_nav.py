@@ -212,8 +212,7 @@ class GpsNavigator(Node):
 
     def move_forward(self):
         twist_msg = Twist()
-        twist_msg.linear.x = self.linear_speed
-    
+        twist_msg.linear.x = -self.linear_speed
         self.velocity_publisher.publish(twist_msg)
 
     def stop_robot(self):
