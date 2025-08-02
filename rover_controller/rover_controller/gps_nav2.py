@@ -27,11 +27,6 @@ def euler_from_quaternion(quaternion):
     t4 = +1.0 - 2.0 * (y * y + z * z)
     yaw = math.atan2(t3, t4)
 
-    # # convert from radians to degrees
-    # roll_deg = math.degrees(roll)
-    # pitch_deg = math.degrees(pitch)
-    # yaw_deg = math.degrees(yaw)
-
     return round(roll, 6), round(pitch, 6), round(yaw, 6)
 
 class GpsNavigator(Node):
@@ -53,12 +48,11 @@ class GpsNavigator(Node):
         self.distance_tolerance = self.get_parameter('distance_tolerance').value
 
         # --- State Variables ---
-        self.current_lat = 0.0
-        self.current_lon = 0.0
-        self.current_yaw = 0.0
-        self.is_first_gps_msg = True
-        self.origin_lat = 0.0
-        self.origin_lon = 0.0
+        self.current_lat = None
+        self.current_lon = None
+        self.current_yaw = None
+        self.origin_lat = None
+        self.origin_lon = None
         
         # --- ROS Publishers & Subscribers ---
         self.cmd_vel_pub = self.create_publisher(Twist, '/cmd_vel', 10)
@@ -73,10 +67,9 @@ class GpsNavigator(Node):
     def gps_callback(self, msg):
         self.current_lat = msg.latitude
         self.current_lon = msg.longitude
-        if self.is_first_gps_msg:
+        if self.origin_lat is None or self.origin_lon is None:
             self.origin_lat = self.current_lat
             self.origin_lon = self.current_lon
-            self.is_first_gps_msg = False
             self.get_logger().info(f"Origin set at LAT: {self.origin_lat}, LON: {self.origin_lon}")
             self.get_logger().info(f"Navigating to Target: LAT={self.target_lat}, LON={self.target_lon}")
 
@@ -91,7 +84,7 @@ class GpsNavigator(Node):
 
     def navigation_loop(self):
         # Wait until the origin is set from the first GPS message
-        if self.is_first_gps_msg:
+        if None in (self.origin_lat, self.origin_lon, self.current_yaw):
             return
 
         current_x, current_y = self.convert_gps_to_xy(self.current_lat, self.current_lon)
