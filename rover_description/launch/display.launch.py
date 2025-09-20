@@ -68,6 +68,7 @@ def generate_launch_description():
             # 'gz_args': 'empty.sdf'
             'gz_args': world_map,
             # 'gz_args': 'spherical_coordinates.sdf'
+            # 'gz_args': 'depth_camera_sensor.sdf'
         }.items()
     )
 
@@ -100,10 +101,19 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # gazebo launch
+        # # gazebo launch
         gz_sim_launch,
         create_entity_cmd,
-        ros_gz_bridge
+        ros_gz_bridge,
+
+        # keleop keyboard
+        Node(
+            package='teleop_twist_keyboard',
+            executable='teleop_twist_keyboard',
+            name='teleop_twist_keyboard',
+            # output='screen',
+            prefix='xterm -e'  # opens a new terminal
+        ),
     ])
 
 if __name__=="__main__":
