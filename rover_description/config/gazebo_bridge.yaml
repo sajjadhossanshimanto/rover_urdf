@@ -33,3 +33,21 @@
   ros_topic_name: "/gps"
   ros_type_name: "sensor_msgs/msg/NavSatFix"
   direction: GZ_TO_ROS
+
+- gz_topic_name: "/camera/camera_info"
+  gz_type_name: "gz.msgs.CameraInfo"
+  ros_topic_name: "/camera/camera_info"
+  ros_type_name: "sensor_msgs/msg/CameraInfo"
+  direction: GZ_TO_ROS
+
+- gz_topic_name: "/camera/images"
+  gz_type_name: "gz.msgs.Image"
+  ros_topic_name: "/camera/images"
+  ros_type_name: "sensor_msgs/msg/Image"
+  direction: GZ_TO_ROS
+
+- gz_topic_name: "/camera/images/points"
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  ros_topic_name: "/camera/images/points"
+  ros_type_name: "sensor_msgs/msg/PointCloud2"
+  direction: GZ_TO_ROS
