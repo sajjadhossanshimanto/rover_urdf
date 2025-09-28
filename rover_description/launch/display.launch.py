@@ -81,25 +81,39 @@ def generate_launch_description():
         output='screen' # only for debug to confirm running
     )
 
+    wheel_controller_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui'
+    )
+
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', rviz_config],
+        output='screen'
+    )
+
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        parameters=[{'robot_description': robot_description}]
+    )
+
+    keleop = Node(
+        package='teleop_twist_keyboard',
+        executable='teleop_twist_keyboard',
+        name='teleop_twist_keyboard',
+        # output='screen',
+        prefix='xterm -e'  # opens a new terminal
+    )
+
     return LaunchDescription([
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            parameters=[{'robot_description': robot_description}]
-        ),
-        Node(
-            package='joint_state_publisher_gui',
-            executable='joint_state_publisher_gui',
-            name='joint_state_publisher_gui'
-        ),
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', rviz_config],
-            output='screen'
-        ),
+        robot_state_publisher,
+        rviz,
+        wheel_controller_gui,
 
         # # gazebo launch
         gz_sim_launch,
@@ -107,13 +121,7 @@ def generate_launch_description():
         ros_gz_bridge,
 
         # keleop keyboard
-        Node(
-            package='teleop_twist_keyboard',
-            executable='teleop_twist_keyboard',
-            name='teleop_twist_keyboard',
-            # output='screen',
-            prefix='xterm -e'  # opens a new terminal
-        ),
+        keleop
     ])
 
 if __name__=="__main__":

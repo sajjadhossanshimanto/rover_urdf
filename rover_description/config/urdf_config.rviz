@@ -44,7 +44,7 @@ Visualization Manager:
       Offset:
         X: 0
         Y: 0
-        Z: -0.5199999809265137
+        Z: -0.52
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: odom
