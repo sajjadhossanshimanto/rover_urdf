@@ -120,7 +120,7 @@ def generate_launch_description():
         create_entity_cmd,
         ros_gz_bridge,
 
-        # keleop keyboard
+        # # keleop keyboard
         keleop
     ])
 

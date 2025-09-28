@@ -13,9 +13,9 @@
         <sensor name="camera_sensor" type="depth_camera">
             <camera>
                 <image>
-                    <width>1280</width>
-                    <height>720</height>
-                    <!-- <format>R8G8B8</format> -->
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
                 </image>
                 <clip>
                     <near>0.6</near>
@@ -29,7 +29,8 @@
                         <far>6</far>
                     </clip>
                 </depth_camera>
-                <optical_frame_id>camera_link_optical</optical_frame_id>
+                
+                <optical_frame_id>camera_sensor</optical_frame_id>
                 <camera_info_topic>camera/camera_info</camera_info_topic>
             </camera>
 
