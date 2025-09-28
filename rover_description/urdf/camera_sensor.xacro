@@ -22,11 +22,13 @@
                     <far>20</far>
                 </clip>
 
-                <!-- <depth_camera>
-                    <ourput>depths</ourput>
-                    <near>0.6</near>
-                    <far>6</far>
-                </depth_camera> -->
+                <depth_camera>
+                    <output>depths</output>
+                    <clip>
+                        <near>0.6</near>
+                        <far>6</far>
+                    </clip>
+                </depth_camera>
                 <optical_frame_id>camera_link_optical</optical_frame_id>
                 <camera_info_topic>camera/camera_info</camera_info_topic>
             </camera>
