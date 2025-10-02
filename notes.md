@@ -65,3 +65,67 @@ gz topic -t "/model/rover_robo/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, a
     - currently the axis zero is located in one of the wheel
     - need to move the origine to `base_footprint` straight bellow the `base_link`
 
+## Slam toolbox
+- slam toolbox works only with 2D lider data
+- to use 3D depth data 
+  - we may convert into 2D lider data using `pointcloud_to_laserscan` 
+  - or for 3D visualisation we use `rtab_map`
+
+- param file for slam. copy it from installed folder
+- most important thing to modify are
+```
+    # ROS Parameters
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+    use_map_saver: true
+    mode: mapping #localization
+```
+- running the slam toolbox
+```
+ros2 launch slam_toolbox online_async_launch.py param_file:=src/rover_description/config/mapper_params_online_async.yaml use_sim_tgime:=true
+```
+- add the `map` topic in rviz. 
+
+### pointcloud_to_laserscan
+- intall the package
+```bash
+sudo apt update
+sudo apt install ros-${ROS_DISTRO}-pointcloud-to-laserscan
+```
+- runing the package 
+```
+ros2 run pointcloud_to_laserscan pointcloud_to_laserscan_node
+```
+- cofigure a yaml file. all param list [ros index](https://index.ros.org/p/pointcloud_to_laserscan/)
+```xml
+pointcloud_to_laserscan_node:
+  ros__parameters:
+    target_frame: base_link
+    transform_tolerance: 0.01
+    min_height: 0.0
+    max_height: 1.0
+    angle_min: -1.57
+    angle_max: 1.57
+    angle_increment: 0.0087
+    scan_time: 0.033
+    range_min: 0.45
+    range_max: 10.0
+    use_inf: true
+    input_pointclud_topic: /camera/images/points
+    output_scan_topic: /scan
+```
+- run with config file (not sure if working)
+```
+ros2 run pointcloud_to_laserscan pointcloud_to_laserscan_node --ros-args --params-file ~/your_path/pointcloud_to_laserscan.yaml
+```
+- run with just changeing the input topic (haven't confirm if working)
+```
+ros2 run pointcloud_to_laserscan pointcloud_to_laserscan_node --ros-args -r input:=/camera/images/points
+```
+
+### ISSUE
+- `/scan` topic is created by empty 
+- it is confirmed that point clound is not working
+
