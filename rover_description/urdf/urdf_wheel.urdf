@@ -1,74 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
 <robot name="rover_description">
   
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/robot_base.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/robot_base.stl" />
+      </geometry>
+    </collision>
+  </link>
   <!-- <link name="base_footprint" /> -->
 
-  <link
-    name="base_link">
-    <inertial>
-      <origin
-        xyz="-0.015849188161993 -0.0187715062637396 -0.239600824235464"
-        rpy="0 0 0" />
-      <mass
-        value="18.9097180944353" />
-      <inertia
-        ixx="0.175714926339788"
-        ixy="5.59199856757057E-05"
-        ixz="-0.00114013593020295"
-        iyy="1.42250580205738"
-        iyz="-1.33765976099103E-05"
-        izz="1.31620569058488" />
-    </inertial>
+  <!-- <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_link"/>
+    <chld link="base_footprint"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint> -->
+
+  <!-- Front right Wheel -->
+  <link name="FR_wheel">
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/base_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(arg rover_path)/meshes/base_link.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <link
-    name="joint_1">
-    <inertial>
-      <origin
-        xyz="-4.83698377407027E-07 0.0407313066510072 -7.95011263043932E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.978511890736954" />
-      <inertia
-        ixx="0.00392622361603203"
-        ixy="-3.19818061675555E-08"
-        ixz="3.00318438598734E-11"
-        iyy="0.00390380300501488"
-        iyz="4.84067146482592E-07"
-        izz="0.00392622284986234" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="file://$(arg rover_path)/meshes/joint_1.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -82,51 +50,31 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_1.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="wheel_1"
-    type="continuous">
+  <joint name="FR_joint" type="continuous">
     <origin
-      xyz="-0.39068 -0.41211 -0.38728"
+      xyz="0.357788 -0.421409 0.132618"
       rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="joint_1" />
-    <axis
-      xyz="0 -1 0" />
+    <parent link="base_link" />
+    <child link="FR_wheel" />
+    <axis xyz="0 1 0" />
     <limit
-      lower="0"
-      upper="0"
       effort="20"
       velocity="20" />
   </joint>
-  <link
-    name="joint_2">
-    <inertial>
-      <origin
-        xyz="7.14468498919096E-07 -0.0407313061110303 -7.93270370674781E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.978511903090739" />
-      <inertia
-        ixx="0.00392622359053013"
-        ixy="-1.79047218636518E-08"
-        ixz="-7.73104380645234E-12"
-        iyy="0.00390380295154401"
-        iyz="-4.84791975184863E-07"
-        izz="0.00392622282216524" />
-    </inertial>
+
+  <!-- Back right Wheel -->
+  <link name="BR_wheel">
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_2.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -140,51 +88,32 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_2.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="wheel_2"
-    type="continuous">
+  <joint name="BR_joint" type="continuous">
     <origin
-      xyz="-0.390678841233882 0.374505301267686 -0.387276310870224"
+      xyz="-0.377044 -0.421409 0.132084"
       rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="joint_2" />
-    <axis
-      xyz="0 -1 0" />
+    <parent link="base_link" />
+    <child link="BR_wheel" />
+    <axis xyz="0 1 0" />
     <limit
-      lower="0"
-      upper="0"
       effort="20"
       velocity="20" />
   </joint>
-  <link
-    name="joint_3">
-    <inertial>
-      <origin
-        xyz="-2.0872336782829E-06 -0.040731306653796 -7.68646280835394E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.978511891131766" />
-      <inertia
-        ixx="0.00392622351933036"
-        ixy="-1.85286887260406E-07"
-        ixz="-2.5627269364985E-10"
-        iyy="0.00390380300505671"
-        iyz="-4.48344295864835E-07"
-        izz="0.00392622294668659" />
-    </inertial>
+
+
+  <!-- Front Left Wheel -->
+  <link name="FL_wheel">
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_3.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -198,51 +127,31 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_3.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="wheel_3"
-    type="continuous">
+  <joint name="FL_joint" type="continuous">
     <origin
-      xyz="0.349292562707965 0.374648069983417 -0.387276310870224"
+      xyz="0.359424 0.412712 0.132259"
       rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="joint_3" />
-    <axis
-      xyz="0 -1 0" />
+    <parent link="base_link" />
+    <child link="FL_wheel" />
+    <axis xyz="0 1 0" />
     <limit
-      lower="0"
-      upper="0"
       effort="20"
       velocity="20" />
   </joint>
-  <link
-    name="joint_4">
-    <inertial>
-      <origin
-        xyz="-3.21675105779962E-06 0.0407313061117895 -7.286341051016E-06"
-        rpy="0 0 0" />
-      <mass
-        value="0.97851190354741" />
-      <inertia
-        ixx="0.00392622351648147"
-        ixy="1.38258628304703E-07"
-        ixz="-2.26918202540043E-10"
-        iyy="0.00390380295158154"
-        iyz="4.65003645043901E-07"
-        izz="0.00392622289627493" />
-    </inertial>
+
+  <!-- back Left Wheel -->
+  <link name="BL_wheel">
     <visual>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_4.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -256,26 +165,20 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file://$(arg rover_path)/meshes/joint_4.STL" />
+          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="wheel_4"
-    type="continuous">
+  <joint name="BL_joint" type="continuous">
     <origin
-      xyz="0.349292562707965 -0.412250550889761 -0.387276310870224"
+      xyz="-0.385612 0.413443 0.131906"
       rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="joint_4" />
-    <axis
-      xyz="0 -1 0" />
+    <parent link="base_link" />
+    <child link="BL_wheel" />
+    <axis xyz="0 1 0" />
     <limit
-      lower="0"
-      upper="0"
       effort="20"
       velocity="20" />
   </joint>
+
 </robot>
