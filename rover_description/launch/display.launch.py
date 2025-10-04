@@ -26,7 +26,7 @@ def generate_launch_description():
 
     rviz_config = PathJoinSubstitution([
         config_dir,
-        'urdf_config.rviz'
+        'urdf_config_new.rviz'
     ])
     bridge_config = PathJoinSubstitution([
         config_dir,
@@ -49,7 +49,7 @@ def generate_launch_description():
     create_entity_cmd = ExecuteProcess(
         cmd=[
             'ros2', 'run', 'ros_gz_sim', 'create', '-topic', 'robot_description',
-            '-z', '0.52'  # Set robot 0.6 meters above ground
+            # '-z', '0.52'  # Set robot 0.6 meters above ground
         ],
         output='screen'
     )
