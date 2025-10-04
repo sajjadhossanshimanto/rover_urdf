@@ -2,6 +2,7 @@
 
 <robot name="rover_description">
   
+  <link name="base_footprint" />
 
   <link name="base_link">
     <visual>
@@ -20,13 +21,12 @@
       </geometry>
     </collision>
   </link>
-  <!-- <link name="base_footprint" /> -->
 
-  <!-- <joint name="base_footprint_joint" type="fixed">
-    <parent link="base_link"/>
-    <chld link="base_footprint"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint> -->
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 .52019" rpy="0 0 0"/>
+  </joint>
 
   <!-- Front right Wheel -->
   <link name="FR_wheel">
@@ -56,7 +56,7 @@
   </link>
   <joint name="FR_joint" type="continuous">
     <origin
-      xyz="0.357788 -0.421409 0.132618"
+      xyz="0.357788 -0.421409 -0.387336"
       rpy="0 0 0" />
     <parent link="base_link" />
     <child link="FR_wheel" />
@@ -94,7 +94,7 @@
   </link>
   <joint name="BR_joint" type="continuous">
     <origin
-      xyz="-0.377044 -0.421409 0.132084"
+      xyz="-0.377044 -0.421409 -0.383722"
       rpy="0 0 0" />
     <parent link="base_link" />
     <child link="BR_wheel" />
@@ -133,7 +133,7 @@
   </link>
   <joint name="FL_joint" type="continuous">
     <origin
-      xyz="0.359424 0.412712 0.132259"
+      xyz="0.359424 0.412712 -0.386553"
       rpy="0 0 0" />
     <parent link="base_link" />
     <child link="FL_wheel" />
@@ -171,7 +171,7 @@
   </link>
   <joint name="BL_joint" type="continuous">
     <origin
-      xyz="-0.385612 0.413443 0.131906"
+      xyz="-0.385612 0.413443 -0.386925"
       rpy="0 0 0" />
     <parent link="base_link" />
     <child link="BL_wheel" />
