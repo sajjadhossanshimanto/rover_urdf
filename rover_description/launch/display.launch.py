@@ -69,6 +69,7 @@ def generate_launch_description():
             'gz_args': world_map,
             # 'gz_args': 'spherical_coordinates.sdf'
             # 'gz_args': 'depth_camera_sensor.sdf'
+            'output': 'screen'
         }.items()
     )
 
@@ -84,7 +85,8 @@ def generate_launch_description():
     wheel_controller_gui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui'
+        name='joint_state_publisher_gui',
+        parameters=[{'use_sim_time': True}]
     )
 
     rviz = Node(
@@ -92,14 +94,17 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         arguments=['-d', rviz_config],
-        output='screen'
+        output='screen',
+        parameters=[{'use_sim_time': True}]
     )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
-        parameters=[{'robot_description': robot_description}]
+        parameters=[{
+            'robot_description': robot_description
+        }]
     )
 
     keleop = Node(
@@ -107,7 +112,7 @@ def generate_launch_description():
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
         # output='screen',
-        prefix='xterm -e'  # opens a new terminal
+        prefix='xterm -e'
     )
 
     return LaunchDescription([

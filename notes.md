@@ -129,3 +129,17 @@ ros2 run pointcloud_to_laserscan pointcloud_to_laserscan_node --ros-args -r inpu
 - `/scan` topic is created by empty 
 - it is confirmed that point clound is not working
 
+## URDF
+- for urdf testing use `urdf_tutorial` package
+```
+ros2 launch urdf_tutorial display.launch.py model:=<udrf file path>
+```
+- `<udrf file path>` have to be absolute path for wsl
+```
+ros2 launch urdf_tutorial display.launch.py model:=/mnt/d/coding/urdf_ws/src/rover_description/urdf/urdf_wheel.urdf
+```
+- always confirm the tf tree
+```
+ros2 run tf2_tools view_frames
+```
+
