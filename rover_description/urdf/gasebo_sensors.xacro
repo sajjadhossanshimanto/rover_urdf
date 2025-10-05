@@ -25,14 +25,14 @@
         <plugin 
         filename="gz-sim-diff-drive-system"
         name="gz::sim::systems::DiffDrive">
-            <right_joint>wheel_3</right_joint>
-            <right_joint>wheel_2</right_joint>
-            <left_joint>wheel_1</left_joint>
-            <left_joint>wheel_4</left_joint>
+            <right_joint>FR_joint</right_joint>
+            <right_joint>BR_joint</right_joint>
+            <left_joint>BL_joint</left_joint>
+            <left_joint>FL_joint</left_joint>
             <wheel_separation>0.786</wheel_separation>
             <wheel_radius>0.25</wheel_radius>
             <frame_id>odom</frame_id>
-            <child_frame_id>base_link</child_frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
 
         </plugin>
     </gazebo>
@@ -41,10 +41,11 @@
         <plugin 
             filename="gz-sim-joint-state-publisher-system" 
             name="gz::sim::systems::JointStatePublisher">
-            <joint_name>wheel_1</joint_name>
-            <joint_name>wheel_2</joint_name>
-            <joint_name>wheel_3</joint_name>
-            <joint_name>wheel_4</joint_name>
+            <!-- <joint_name>base_footprint_joint</joint_name> -->
+            <joint_name>FR_joint</joint_name>
+            <joint_name>BR_joint</joint_name>
+            <joint_name>BL_joint</joint_name>
+            <joint_name>FL_joint</joint_name>
         </plugin>
     </gazebo>
 

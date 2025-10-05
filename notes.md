@@ -28,6 +28,7 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 - there is also package available for joystick `teleop_twist_joy`
 
 ## Gazebo plugin
+- diff-drive system for robot
 - system repo -> https://github.com/gazebosim/gz-sim/tree/gz-sim8/src/systems
 - It's always better to follow version spacefic instruction
 - we are using `gazebosim` and version 8+. so branch is `gz-sim8`

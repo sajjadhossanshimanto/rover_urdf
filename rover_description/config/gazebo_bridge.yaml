@@ -16,6 +16,12 @@
   gz_type_name: "gz.msgs.Pose_V"
   direction: GZ_TO_ROS
 
+# - gz_topic_name: "/model/rover_robo/odometry"
+#   ros_topic_name: "/odom"
+#   ros_type_name: "nav_msgs/msg/Odometry"
+#   gz_type_name: "gz.msgs.Odometry"
+#   direction: GZ_TO_ROS
+
 - ros_topic_name: "/cmd_vel"
   gz_topic_name: "/model/rover_robo/cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
