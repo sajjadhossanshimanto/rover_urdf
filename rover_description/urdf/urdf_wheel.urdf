@@ -23,7 +23,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/robot_base.stl" />
+        <mesh filename="file://$(arg rover_path)/meshes/robot_base.stl" />
       </geometry>
       <material name="">
         <color rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
@@ -32,7 +32,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/robot_base.stl" />
+        <mesh filename="file://$(arg rover_path)/meshes/robot_base.stl" />
       </geometry>
     </collision>
   </link>
@@ -65,7 +65,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/right_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -79,7 +79,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/right_wheel.stl" />
       </geometry>
     </collision>
   </link>
@@ -117,7 +117,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/right_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -131,7 +131,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/right_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/right_wheel.stl" />
       </geometry>
     </collision>
   </link>
@@ -170,7 +170,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/left_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -184,7 +184,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/left_wheel.stl" />
       </geometry>
     </collision>
   </link>
@@ -222,7 +222,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/left_wheel.stl" />
       </geometry>
       <material
         name="">
@@ -236,7 +236,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="file:///mnt/d/coding/urdf_ws/install/rover_description/share/rover_description/meshes/left_wheel.stl" />
+          filename="file://$(arg rover_path)/meshes/left_wheel.stl" />
       </geometry>
     </collision>
   </link>
