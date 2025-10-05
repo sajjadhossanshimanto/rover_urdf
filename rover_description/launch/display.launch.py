@@ -136,3 +136,20 @@ def generate_launch_description():
 
 if __name__=="__main__":
     generate_launch_description()
+
+'''
+/camera/depth_image
+/camera/image
+/camera/images/camera_info
+/camera/images/points
+
+ros2 launch rtabmap_launch rtabmap.launch.py \
+    rtabmap_args:="--delete_db_on_start" \
+    rgb_topic:=/camera/image \
+    depth_topic:=/camera/depth_image \
+    camera_info_topic:=/camera/images/camera_info \
+    frame_id:=camera_sensor \
+    use_sim_time:=true \
+    approx_sync:=true qos:=2 rviz:=true queue_size:=30
+
+'''

@@ -43,9 +43,9 @@
   direction: GZ_TO_ROS
 
 # depth camera -- 4 topic
-- gz_topic_name: "/camera/camera_info"
+- gz_topic_name: "/camera/images/camera_info"
   gz_type_name: "gz.msgs.CameraInfo"
-  ros_topic_name: "/camera/camera_info"
+  ros_topic_name: "/camera/images/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   direction: GZ_TO_ROS
 

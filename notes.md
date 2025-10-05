@@ -45,7 +45,7 @@ gz topic -t "/model/rover_robo/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, a
 
 ## gazebo sensors
 - sensors [library](https://github.com/gazebosim/gz-sensors)
-- stf format [tree](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_navsat)
+- sdf format [tree](http://sdformat.org/spec?ver=1.12&elem=sensor#sensor_navsat)
 - predefined world [sdf](https://github.com/gazebosim/gz-sim/tree/gz-sim8/examples/worlds)
 - add in the world
 ```
@@ -144,3 +144,44 @@ ros2 launch urdf_tutorial display.launch.py model:=/mnt/d/coding/urdf_ws/src/rov
 ros2 run tf2_tools view_frames
 ```
 
+
+## Rtab-map
+- launch files according to camera sensors [github](https://github.com/introlab/rtabmap_ros/tree/ros2/rtabmap_examples/launch)
+- rtabmap [github](https://github.com/introlab/rtabmap_ros?tab=readme-ov-file#installation)
+  - [demos](https://github.com/introlab/rtabmap_ros/tree/ros2/rtabmap_demos) 
+
+- Data not received error
+  - changed the diff-drive fixed-frame from odom -> map
+  - commands i tried
+  - from github
+  ```
+  ros2 launch rtabmap_launch rtabmap.launch.py     rtabmap_args:="--delete_db_on_start"     rgb_topic:=/camera/image     depth_topic:=/camera/depth_image     camera_info_topic:=/camera/camera_info     frame_id:=camera_sensor     use_sim_time:=true     approx_sync:=true qos:=2 rviz:=true queue_size:=30
+  ```
+  - from gpt
+  ```
+   ros2 launch rtabmap_launch rtabmap.launch.py   rgb_topic:=/camera/image   depth_topic:=/camera/depth_image   camera_info_topic:=/camera/camera_info   frame_id:=camera_sensor   use_sim_time:=true   visual_odometry:=true   approx_sync:=true   qos_image:=1 qos_camera_info:=1 qos_odom:=1
+  ```
+  - checked the time-stamp header of briged camera & depth_camera data. 
+  - tried with direct point cloud input.
+  ```
+  ros2 launch rtabmap_launch rtabmap.launch.py    rgb_topic:=/camera/image    camera_info_topic:=/camera/camera_info    scan_cloud_topic:=/camera/images/points    frame_id:=camera_sensor    use_sim_time:=true    visual_odometry:=true
+  ```
+  - with this they look for `/camera/depth_registered/image_raw` 
+  - not even rtab_viz  starting
+  - another gpt
+  ```
+   ros2 launch rtabmap_launch rtabmap.launch.py    rgbd_sync:=false    scan_cloud_topic:=/camera/images/points
+  ```
+  - my initial command
+  ```
+  ros2 launch rtabmap_launch rtabmap.launch.py    rgb_topic:=/camera/image    depth_topic:=/camera/depth_image    camera_info_topic:=/camera/camera_info    frame_id:=camera_sensor    use_sim_time:=true    visual_odometry:=true
+  ```
+- corrected command
+```
+ros2 launch rtabmap_launch rtabmap.launch.py     rtabmap_args:="--delete_db_on_start"     rgb_topic:=/camera/image     depth_topic:=/camera/depth_image     camera_info_topic:=/camera/images/camera_info     frame_id:=camera_sensor     use_sim_time:=true     approx_sync:=true qos:=2 rviz:=true queue_size:=30
+```
+
+- lets run with turtle bot first .
+
+## turtlebot
+- official [docs](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node)
