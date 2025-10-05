@@ -77,7 +77,8 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         parameters=[{
-            'config_file': bridge_config# config file path
+            'config_file': bridge_config,
+            'use_sim_time': True
         }],
         output='screen' # only for debug to confirm running
     )
@@ -103,7 +104,8 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         parameters=[{
-            'robot_description': robot_description
+            'robot_description': robot_description,
+            'use_sim_time': True
         }]
     )
 
@@ -112,7 +114,10 @@ def generate_launch_description():
         executable='teleop_twist_keyboard',
         name='teleop_twist_keyboard',
         # output='screen',
-        prefix='xterm -e'
+        prefix='xterm -e',
+        parameters=[{
+            'use_sim_time': True
+        }]
     )
 
     return LaunchDescription([
