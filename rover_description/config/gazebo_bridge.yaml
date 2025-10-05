@@ -28,27 +28,36 @@
   gz_type_name: "gz.msgs.Twist"
   direction: ROS_TO_GZ
 
+# IMU sensor transfer
 - gz_topic_name: "/imu"
   gz_type_name: "gz.msgs.IMU"
   ros_topic_name: "/imu"
   ros_type_name: "sensor_msgs/msg/Imu"
   direction: GZ_TO_ROS
 
+# GPS sensor data
 - gz_topic_name: "/gps"
   gz_type_name: "gz.msgs.NavSat"
   ros_topic_name: "/gps"
   ros_type_name: "sensor_msgs/msg/NavSatFix"
   direction: GZ_TO_ROS
 
+# depth camera -- 4 topic
 - gz_topic_name: "/camera/camera_info"
   gz_type_name: "gz.msgs.CameraInfo"
   ros_topic_name: "/camera/camera_info"
   ros_type_name: "sensor_msgs/msg/CameraInfo"
   direction: GZ_TO_ROS
 
-- gz_topic_name: "/camera/images"
+- gz_topic_name: "/camera/images/image"
   gz_type_name: "gz.msgs.Image"
-  ros_topic_name: "/camera/images"
+  ros_topic_name: "/camera/image"
+  ros_type_name: "sensor_msgs/msg/Image"
+  direction: GZ_TO_ROS
+
+- gz_topic_name: "/camera/images/depth_image"
+  gz_type_name: "gz.msgs.Image"
+  ros_topic_name: "/camera/depth_image"
   ros_type_name: "sensor_msgs/msg/Image"
   direction: GZ_TO_ROS
 

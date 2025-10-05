@@ -10,7 +10,7 @@
     </joint>
 
     <gazebo reference="camera_sensor">
-        <sensor name="camera_sensor" type="depth_camera">
+        <sensor name="camera_sensor" type="rgbd_camera">
             <camera>
                 <image>
                     <width>640</width>
