@@ -185,6 +185,17 @@ ros2 launch rtabmap_launch rtabmap.launch.py     rtabmap_args:="--delete_db_on_s
 
 ## turtlebot
 - official [docs](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node)
+
+
+## Elevation map
+- cuda based from leggedrobotics. [link](https://github.com/leggedrobotics/elevation_mapping_cupy). 
+  - works in ros2 humble
+- anybotics [link](https://github.com/ANYbotics/elevation_mapping/tree/master)
+  - no mention of ros2 installation in the readme. but branch exists
+
+## moveit
+- binary installation [link](https://moveit.ai/install-moveit2/binary/)
+
 ## IMU tools
 - imu tool packagee have 2 fusion algo for imu. it provides 4 function
 
@@ -221,6 +232,12 @@ ros2 run rqt_plot rqt_plot /imu/angular_velocity/x:y:z
 ```
 ros2 run rqt_plot rqt_plot /magnet/magnetic_field/x:y:z
 ```
+
+## ros wiki
+- wiki.ros -> is for ros1
+- index.ros.org -> is for ros2
+
+but i think `wiki.ros` describes better than `index.ros`. ros wiki clearly shows what i need to pass and what will bw the output topics. 
 
 
 ## rqt_plot
