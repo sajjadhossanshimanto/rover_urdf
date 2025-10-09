@@ -4,6 +4,7 @@
     <xacro:include filename="urdf_wheel.urdf" />
     <xacro:include filename="diff-drive-controll.xacro" />
     <xacro:include filename="imu_sensor.xacro" />
+    <xacro:include filename="magnetometer.xacro" />
     <xacro:include filename="gps_sensor.xacro" />
     <xacro:include filename="camera_sensor.xacro" />
 

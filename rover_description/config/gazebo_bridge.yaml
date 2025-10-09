@@ -35,6 +35,13 @@
   ros_type_name: "sensor_msgs/msg/Imu"
   direction: GZ_TO_ROS
 
+# margeto-meter
+- gz_topic_name: "/magnet"
+  gz_type_name: "gz.msgs.Magnetometer"
+  ros_topic_name: "/magnet"
+  ros_type_name: "sensor_msgs/msg/MagneticField"
+  direction: GZ_TO_ROS
+
 # GPS sensor data
 - gz_topic_name: "/gps"
   gz_type_name: "gz.msgs.NavSat"
