@@ -185,3 +185,25 @@ ros2 launch rtabmap_launch rtabmap.launch.py     rtabmap_args:="--delete_db_on_s
 
 ## turtlebot
 - official [docs](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node)
+## IMU tools
+- imu tool packagee have 2 fusion algo for imu. it provides 4 function
+
+| Node                   | Main Use                    | Lightweight?        | Magnetic Support |
+| ---------------------- | --------------------------- | ------------------- | ---------------- |
+| `complementary_filter` | Fast, simple orientation    | ✅                   | Optional         |
+| `imu_filter_madgwick`  | More accurate fusion        | ⚙️ Slightly heavier | ✅                |
+| `imu_transformer`      | Adjust frame rotation       | ✅                   | —                |
+| `imu_to_tf`            | Broadcast orientation as TF | ✅                   | —                |
+
+- imu_filter_madgwick
+```
+ros2 run imu_filter_madgwick imu_filter_madgwick_node \
+  --ros-args -r /imu/data_raw:=/imu/raw -r /imu/data:=/imu/madgwick
+```
+- imu_complementary_filter
+```
+ros2 run imu_complementary_filter complementary_filter_node \
+  --ros-args \
+  -r /imu/data_raw:=/your/imu/topic \
+  -r /imu/data:=/imu/data_filtered
+```
