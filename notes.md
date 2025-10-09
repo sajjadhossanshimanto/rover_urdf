@@ -204,6 +204,31 @@ ros2 run imu_filter_madgwick imu_filter_madgwick_node \
 ```
 ros2 run imu_complementary_filter complementary_filter_node \
   --ros-args \
-  -r /imu/data_raw:=/your/imu/topic \
-  -r /imu/data:=/imu/data_filtered
+  -r /imu/data_raw:=/imu \
+  -r /imu/mag:=/magnet
+```
+
+### Testng
+- IMU orientation
+```
+ros2 run rqt_plot rqt_plot /imu/orientation/x:y:z:w
+```
+- angular velocity
+```
+ros2 run rqt_plot rqt_plot /imu/angular_velocity/x:y:z
+```
+- magnetometer
+```
+ros2 run rqt_plot rqt_plot /magnet/magnetic_field/x:y:z
+```
+
+
+## rqt_plot
+- a simple matplot for debugging
+```
+ros2 run rqt_plot rqt_plot /topic
+```
+- or if i need to a specific field 
+```
+ros2 run rqt_plot rqt_plot /imu/linear_acceleration/x:y:z
 ```
