@@ -2,7 +2,6 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <link name="imu_sensor"/>
-    <!-- </link> -->
 
     <joint name="imu_sensor_joint" type="fixed">
         <parent link="base_link" />
@@ -13,7 +12,8 @@
     <gazebo reference="imu_sensor">
         <sensor name="imu_sensor" type="imu">
             <always_on>1</always_on>
-            <update_rate>1</update_rate>
+            <update_rate>20</update_rate>
+            <!-- to fule it should be same rate as camera -->
             <visualize>true</visualize>
             <topic>imu</topic>
             <imu>
