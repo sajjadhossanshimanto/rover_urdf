@@ -152,4 +152,15 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     use_sim_time:=true \
     approx_sync:=true qos:=2 rviz:=true queue_size:=30
 
+# with imu
+ros2 launch rtabmap_launch rtabmap.launch.py \
+    rtabmap_args:="--delete_db_on_start" \
+    rgb_topic:=/camera/image \
+    depth_topic:=/camera/depth_image \
+    camera_info_topic:=/camera/images/camera_info \
+    imu_topic:=/imu \
+    wait_imu_to_init:=false \
+    frame_id:=camera_sensor \
+    use_sim_time:=true \
+    approx_sync:=true qos:=2 rviz:=true queue_size:=30
 '''
