@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'sensor_filters'
+package_name = 'rover_localization'
 
 setup(
     name=package_name,
