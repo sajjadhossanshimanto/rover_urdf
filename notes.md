@@ -241,7 +241,7 @@ but i think `wiki.ros` describes better than `index.ros`. ros wiki clearly shows
 
 
 ## rqt_plot
-- a simple matplot for debugging
+- a simple matplot for debugging. A more advance plot option would be `PlotJuggler` 
 ```
 ros2 run rqt_plot rqt_plot /topic
 ```
