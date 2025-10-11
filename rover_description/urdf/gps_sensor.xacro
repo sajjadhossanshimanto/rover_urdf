@@ -10,11 +10,28 @@
     </joint>
 
     <gazebo reference="gps_sensor">
-        <sensor name="gps_sensor" type="gps">
+        <sensor name="gps_sensor" type="navsat">
             <always_on>1</always_on>
-            <update_rate>1</update_rate>
+            <update_rate>10</update_rate>
             <visualize>true</visualize>
-            <topic>gps</topic>
+            <topic>gps/fix</topic>
+
+            <navsat>
+                <position_sensing>
+                <horizontal>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>1</stddev> <!-- 1m noise (non-RTK-like) -->
+                    </noise>
+                </horizontal>
+                <vertical>
+                    <noise type="gaussian">
+                    <mean>0.0</mean>
+                    <stddev>2</stddev> <!-- 2cm vertical -->
+                    </noise>
+                </vertical>
+                </position_sensing>
+            </navsat>
         </sensor>
     </gazebo>
 

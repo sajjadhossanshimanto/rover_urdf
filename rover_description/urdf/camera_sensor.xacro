@@ -17,8 +17,9 @@
     <gazebo reference="camera_sensor">
         <sensor name="camera_sensor" type="rgbd_camera">
             <camera>
+                <horizontal_fov>1.5708</horizontal_fov> <!-- 90 degrees -->
                 <image>
-                    <width>640</width>
+                    <width>640</width><!-- minimun resolution -->
                     <height>480</height>
                     <format>R8G8B8</format>
                 </image>

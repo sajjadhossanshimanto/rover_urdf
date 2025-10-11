@@ -18,11 +18,19 @@
             <topic>imu</topic>
             <imu>
                 <orientation_reference_frame>
-                    <localization>CUSTOM</localization>
-                    <custom_rpy parent_frame='base_link'>
-                    0 0 0
-                    </custom_rpy>
+                    <localization>ENU</localization>
                 </orientation_reference_frame>
+
+                <!-- <angular_velocity>
+                    <x><noise type="gaussian"><stddev>0.009</stddev></noise></x>
+                    <y><noise type="gaussian"><stddev>0.009</stddev></noise></y>
+                    <z><noise type="gaussian"><stddev>0.009</stddev></noise></z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x><noise type="gaussian"><stddev>0.021</stddev></noise></x>
+                    <y><noise type="gaussian"><stddev>0.021</stddev></noise></y>
+                    <z><noise type="gaussian"><stddev>0.021</stddev></noise></z>
+                </linear_acceleration> -->
             </imu>
         </sensor>
     </gazebo>
